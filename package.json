@@ -1,0 +1,31 @@
+{
+  "name": "marvel-node",
+  "version": "0.0.1",
+  "description": "Marvel single page application API",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "install-local": "npm install -g mocha & npm install -g node-inspector & npm install",
+    "start": "node server.js 1 prod 127.0.0.1 3000 9000",
+    "debug": "node-debug server.js 0 dev 127.0.0.1 3000 9000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trwalker/marvel-node.git"
+  },
+  "keywords": [
+    "none"
+  ],
+  "author": "Tim Walker",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^2.1.0",
+    "mocha": "^2.1.0",
+    "sinon": "^1.12.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.12.0",
+    "cluster-service": "^1.0.5",
+    "express": "^4.12.0"
+  }
+}
