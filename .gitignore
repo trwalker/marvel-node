@@ -28,4 +28,4 @@ node_modules
 .lock-wscript
 
 # API Keys
-*.key
+apikey.config.json
