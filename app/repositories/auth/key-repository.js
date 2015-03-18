@@ -1,6 +1,13 @@
 
 function KeyRepository() {
-  this.config = require('../../config/apikey.config.json');
+}
+
+function getConfig() {
+  return require('../../config/apikey.config.json');
+}
+
+KeyRepository.prototype = {
+  getConfig: getConfig
 }
 
 var keyRepository = new KeyRepository();
