@@ -15,7 +15,13 @@ describe('CredentialsService Tests', function() {
     keyConfigMock = { publicKey: publicKeyMock, privateKey: privateKeyMock };
 
     credentialsService.keyRepository = { getConfig: function() { return keyConfigMock } };
-
+    credentialsService.cryptoService = { createHash: function(algorithm) {
+                                            return {
+                                              update: function(data) { },
+                                              digest: function(format) { return 'b8fcdc8fd05f1bd62d6c7aa6736afe31' }
+                                            }
+                                          }
+                                       };
   });
 
   describe('lookupCredentials', function() {
@@ -35,7 +41,7 @@ describe('CredentialsService Tests', function() {
     it('returns valid md5', function(done) {
       var credentials = credentialsService.lookupCredentials();
 
-      expect(credentials.hash.length).to.equal(32);
+      expect(credentials.hash).to.equal('b8fcdc8fd05f1bd62d6c7aa6736afe31');
       done();
     });
 

@@ -1,12 +1,16 @@
 
 function CredentialsService() {
   this.keyRepository = require('../../repositories/auth/key-repository');
+  this.cryptoService = require('crypto');
 }
 
 function lookupCredentials() {
   var keyConfig = getKeyConfig(this.keyRepository);
 
-  return { timeStamp: new Date().getTime(), publicKey: keyConfig.publicKey, hash: 'b8fcdc8fd05f1bd62d6c7aa6736afe31' }
+  var timesStamp = new Date().getTime().toString();
+  var hash = createHash(this.cryptoService, timesStamp, keyConfig.privateKey, keyConfig.publicKey);
+
+  return { timeStamp: timesStamp, publicKey: keyConfig.publicKey, hash: hash }
 }
 
 function getKeyConfig(keyRepository) {
@@ -32,6 +36,13 @@ function getKeyConfig(keyRepository) {
   }
 
   return keyConfig;
+}
+
+function createHash(cryptoService, timeStamp, privateKey, publicKey) {
+  var md5Hash = cryptoService.createHash('md5');
+  md5Hash.update(timeStamp + privateKey, publicKey);
+
+  return md5Hash.digest('hex');
 }
 
 CredentialsService.prototype = {
