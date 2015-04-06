@@ -17,7 +17,7 @@ describe('CharactersController Tests', function() {
 
   describe('get()', function() {
 
-    it('is a function', function(done) {
+    it('should be a function', function(done) {
       expect(charactersController.get).to.be.a('function');
       done();
     });

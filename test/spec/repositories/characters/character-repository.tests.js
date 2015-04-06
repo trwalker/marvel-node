@@ -9,7 +9,7 @@ describe('CharacterRepository Tests', function() {
 
   describe('getCharacterData()', function() {
 
-    it('is a function', function(done) {
+    it('should be a function', function(done) {
       expect(characterRepository.getCharacterData).to.be.a('function');
       done();
     });

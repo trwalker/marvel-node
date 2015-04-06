@@ -5,40 +5,40 @@ function CredentialsService() {
 }
 
 function lookupCredentials() {
-  var keyConfig = getKeyConfig(this.keyRepository);
+  var keyConfig = getKeyConfig_(this.keyRepository);
 
   var timesStamp = new Date().getTime().toString();
-  var hash = createHash(this.cryptoService, timesStamp, keyConfig.privateKey, keyConfig.publicKey);
+  var hash = createHash_(this.cryptoService, timesStamp, keyConfig.privateKey, keyConfig.publicKey);
 
   return { timeStamp: timesStamp, publicKey: keyConfig.publicKey, hash: hash }
 }
 
-function getKeyConfig(keyRepository) {
+function getKeyConfig_(keyRepository) {
   var keyConfig;
 
   try {
     keyConfig = keyRepository.getConfig();
   }
   catch (e){
-    throw 'Unable to load .app/config/apikey.config.json, make sure the file exists';
+    throw new Error('Unable to load .app/config/apikey.config.json, make sure the file exists');
   }
 
   if(!keyConfig) {
-    throw 'Invalid .app/config.apikey.config.json';
+    throw new Error('Invalid .app/config.apikey.config.json');
   }
 
   if(!keyConfig.publicKey || keyConfig.publicKey.length === 0) {
-    throw 'Invalid .app/config.apikey.config.json, property "publicKey" is not defined';
+    throw new Error('Invalid .app/config.apikey.config.json, property "publicKey" is not defined');
   }
 
   if(!keyConfig.privateKey || keyConfig.privateKey.length === 0) {
-    throw 'Invalid .app/config.apikey.config.json, property "privateKey" is not defined';
+    throw new Error('Invalid .app/config.apikey.config.json, property "privateKey" is not defined');
   }
 
   return keyConfig;
 }
 
-function createHash(cryptoService, timeStamp, privateKey, publicKey) {
+function createHash_(cryptoService, timeStamp, privateKey, publicKey) {
   var md5Hash = cryptoService.createHash('md5');
   md5Hash.update(timeStamp + privateKey, publicKey);
 
