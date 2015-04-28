@@ -89,7 +89,7 @@ describe('CharactersService Tests', function() {
       sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback(null); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
-      expect(lookupCharacter).to.throw(Error, 'Character data not returned from character repository');
+      expect(lookupCharacter).to.throw(Error, 'CharactersService.getCharacterModelFromData_(): Character data not returned from character repository');
 
       done();
     });
@@ -98,7 +98,7 @@ describe('CharactersService Tests', function() {
       sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: null }); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
-      expect(lookupCharacter).to.throw(Error, 'Character data not returned from character repository');
+      expect(lookupCharacter).to.throw(Error, 'CharactersService.getCharacterModelFromData_(): Character data not returned from character repository');
 
       done();
     });
@@ -107,7 +107,7 @@ describe('CharactersService Tests', function() {
       sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: { results: null } }); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
-      expect(lookupCharacter).to.throw(Error, 'Character data not returned from character repository');
+      expect(lookupCharacter).to.throw(Error, 'CharactersService.getCharacterModelFromData_(): Character data not returned from character repository');
 
       done();
     });
@@ -116,7 +116,7 @@ describe('CharactersService Tests', function() {
       sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: { results: [] } }); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
-      expect(lookupCharacter).to.throw(Error, 'Character data not returned from character repository');
+      expect(lookupCharacter).to.throw(Error, 'CharactersService.getCharacterModelFromData_(): Character data not returned from character repository');
 
       done();
     });

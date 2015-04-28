@@ -24,7 +24,7 @@ function getCharacterCallback_(data, callback) {
 
 function getCharacterModelFromData_(data) {
   if(!data || !data.data || !data.data.results || data.data.results.length === 0) {
-    throw new Error('Character data not returned from character repository');
+    throw new Error('CharactersService.getCharacterModelFromData_(): Character data not returned from character repository');
   }
 
   var characterData = data.data.results[0];

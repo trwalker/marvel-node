@@ -20,19 +20,19 @@ function getKeyConfig_(keyRepository) {
     keyConfig = keyRepository.getConfig();
   }
   catch (e){
-    throw new Error('Unable to load .app/config/apikey.config.json, make sure the file exists');
+    throw new Error('CredentialsService.getKeyConfig_(): Unable to load .app/config/apikey.config.json, make sure the file exists');
   }
 
   if(!keyConfig) {
-    throw new Error('Invalid .app/config.apikey.config.json');
+    throw new Error('CredentialsService.getKeyConfig_(): Invalid .app/config.apikey.config.json');
   }
 
   if(!keyConfig.publicKey || keyConfig.publicKey.length === 0) {
-    throw new Error('Invalid .app/config.apikey.config.json, property "publicKey" is not defined');
+    throw new Error('CredentialsService.getKeyConfig_(): Invalid .app/config.apikey.config.json, property "publicKey" is not defined');
   }
 
   if(!keyConfig.privateKey || keyConfig.privateKey.length === 0) {
-    throw new Error('Invalid .app/config.apikey.config.json, property "privateKey" is not defined');
+    throw new Error('CredentialsService.getKeyConfig_(): Invalid .app/config.apikey.config.json, property "privateKey" is not defined');
   }
 
   return keyConfig;

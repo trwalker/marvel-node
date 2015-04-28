@@ -5,11 +5,31 @@ function CharacterRepository() {
 }
 
 function getCharacterData(id, timeStamp, publicKey, hash, callback) {
+  validateParamters_(id, timeStamp, publicKey, hash, callback);
+
   var requestOptions = buildRequestOptions_(id, timeStamp, publicKey, hash);
 
   this.httpClient_.request(requestOptions, function(error, response, body) {
     responseHandler_(error, response, callback);
   });
+}
+
+function validateParamters_(id, timeStamp, publicKey, hash, callback) {
+  if(!id) {
+    throw new Error('CharacterRepository.validateParamters_(): Parameter "id" cannot be null');
+  }
+  else if(!timeStamp) {
+    throw new Error('CharacterRepository.validateParamters_(): Parameter "timeStamp" cannot be null');
+  }
+  else if(!publicKey) {
+    throw new Error('CharacterRepository.validateParamters_(): Parameter "publicKey" cannot be null');
+  }
+  else if(!hash) {
+    throw new Error('CharacterRepository.validateParamters_(): Parameter "hash" cannot be null');
+  }
+  else if(!callback || callback.length !== 1) {
+    throw new Error('CharacterRepository.validateParamters_(): Callback must be a function with one parameter, "callback(data)"');
+  }
 }
 
 function buildRequestOptions_(id, timeStamp, publicKey, hash) {
@@ -30,26 +50,20 @@ function buildRequestUrl_(id, timeStamp, publicKey, hash) {
 }
 
 function responseHandler_(error, response, callback) {
-  if(callback && callback.length === 1) {
-
-    switch(response.statusCode) {
-      case 200:
-        callback(response.body);
-        break;
-      case 404:
-        var NotFoundError = require('../../errors/not-found-error');
-        throw new NotFoundError('Character data not found');
-        break;
-      case 401:
-        var NotAuthorizedError = require('../../errors/not-found-error');
-        throw new NotAuthorizedError('Not authorized response');
-      default:
-        throw new Error('Unhandled exception getting character data: ' + error);
-        break;
-    }
-  }
-  else {
-    throw new Error('Callback must be a function with one parameter, "callback(data)"');
+  switch(response.statusCode) {
+    case 200:
+      callback(response.body);
+      break;
+    case 404:
+      var NotFoundError = require('../../errors/not-found-error');
+      throw new NotFoundError('CharacterRepository.responseHandler_(): Character data not found');
+      break;
+    case 401:
+      var NotAuthorizedError = require('../../errors/not-found-error');
+      throw new NotAuthorizedError('CharacterRepository.responseHandler_(): Not authorized response');
+    default:
+      throw new Error('CharacterRepository.responseHandler_(): Unhandled exception getting character data, ' + error);
+      break;
   }
 }
 

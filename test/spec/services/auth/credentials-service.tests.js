@@ -49,7 +49,7 @@ describe('CredentialsService Tests', function() {
       credentialsService.keyRepository_ = { getConfig: function() { throw 'unhandled exception' } };
       var lookupCredentials = function() { credentialsService.lookupCredentials(); }
 
-      expect(lookupCredentials).to.throw(Error, 'Unable to load .app/config/apikey.config.json, make sure the file exists');
+      expect(lookupCredentials).to.throw(Error, 'CredentialsService.getKeyConfig_(): Unable to load .app/config/apikey.config.json, make sure the file exists');
       done();
     });
 
@@ -57,7 +57,7 @@ describe('CredentialsService Tests', function() {
       keyConfigMock = null;
       var lookupCredentials = function() { credentialsService.lookupCredentials(); }
 
-      expect(lookupCredentials).to.throw(Error, 'Invalid .app/config.apikey.config.json');
+      expect(lookupCredentials).to.throw(Error, 'CredentialsService.getKeyConfig_(): Invalid .app/config.apikey.config.json');
       done();
     });
 
@@ -65,7 +65,7 @@ describe('CredentialsService Tests', function() {
       keyConfigMock = { foo: 'bar', privateKey: privateKeyMock };
       var lookupCredentials = function() { credentialsService.lookupCredentials(); }
 
-      expect(lookupCredentials).to.throw(Error, 'Invalid .app/config.apikey.config.json, property "publicKey" is not defined');
+      expect(lookupCredentials).to.throw(Error, 'CredentialsService.getKeyConfig_(): Invalid .app/config.apikey.config.json, property "publicKey" is not defined');
       done();
     });
 
@@ -73,7 +73,7 @@ describe('CredentialsService Tests', function() {
       keyConfigMock = { foo: 'bar', publicKey: publicKeyMock };
       var lookupCredentials = function() { credentialsService.lookupCredentials(); }
 
-      expect(lookupCredentials).to.throw(Error, 'Invalid .app/config.apikey.config.json, property "privateKey" is not defined');
+      expect(lookupCredentials).to.throw(Error, 'CredentialsService.getKeyConfig_(): Invalid .app/config.apikey.config.json, property "privateKey" is not defined');
       done();
     });
 
@@ -81,7 +81,7 @@ describe('CredentialsService Tests', function() {
       keyConfigMock = { publicKey: '', privateKey: privateKeyMock };
       var lookupCredentials = function() { credentialsService.lookupCredentials(); }
 
-      expect(lookupCredentials).to.throw(Error, 'Invalid .app/config.apikey.config.json, property "publicKey" is not defined');
+      expect(lookupCredentials).to.throw(Error, 'CredentialsService.getKeyConfig_(): Invalid .app/config.apikey.config.json, property "publicKey" is not defined');
       done();
     });
 
@@ -89,7 +89,7 @@ describe('CredentialsService Tests', function() {
       keyConfigMock = { publicKey: publicKeyMock, privateKey: '' };
       var lookupCredentials = function() { credentialsService.lookupCredentials(); }
 
-      expect(lookupCredentials).to.throw(Error, 'Invalid .app/config.apikey.config.json, property "privateKey" is not defined');
+      expect(lookupCredentials).to.throw(Error, 'CredentialsService.getKeyConfig_(): Invalid .app/config.apikey.config.json, property "privateKey" is not defined');
       done();
     });
   });

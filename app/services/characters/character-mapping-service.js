@@ -4,7 +4,7 @@ function CharacterMappingService() {
 
 function lookupId(characterName) {
   if(!characterName || characterName.length === 0) {
-    throw new TypeError('CharacterMappingService.lookupCharacterId() null or empty character name');
+    throw new TypeError('CharacterMappingService.lookupCharacterId(): Null or empty character name');
   }
 
   switch(characterName.toLowerCase()) {
@@ -32,7 +32,7 @@ function lookupId(characterName) {
       return 1009175;
     default:
       var NotFoundError = require('../../errors/not-found-error');
-      throw new NotFoundError('CharacterMappingService.lookupCharacterId() character not found: ' + characterName);
+      throw new NotFoundError('CharacterMappingService.lookupCharacterId(): Character not found, ' + characterName);
   }
 }
 

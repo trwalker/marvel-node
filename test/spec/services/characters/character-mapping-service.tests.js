@@ -43,21 +43,21 @@ describe('CharacterMappingService Tests', function() {
 
     it('should throw exception given null character name', function(done) {
       var lookUpId = function() { characterMappingService.lookupId(null); }
-      expect(lookUpId).to.throw(TypeError, 'CharacterMappingService.lookupCharacterId() null or empty character name');
+      expect(lookUpId).to.throw(TypeError, 'CharacterMappingService.lookupCharacterId(): Null or empty character name');
 
       done();
     });
 
     it('should throw exception given empty character name', function(done) {
       var lookUpId = function() { characterMappingService.lookupId(''); }
-      expect(lookUpId).to.throw(TypeError, 'CharacterMappingService.lookupCharacterId() null or empty character name');
+      expect(lookUpId).to.throw(TypeError, 'CharacterMappingService.lookupCharacterId(): Null or empty character name');
 
       done();
     });
 
     it('should throw exception given bad character name', function(done) {
       var lookUpId = function() { characterMappingService.lookupId('night-man'); }
-      expect(lookUpId).to.throw(NotFoundError, 'CharacterMappingService.lookupCharacterId() character not found: night-man');
+      expect(lookUpId).to.throw(NotFoundError, 'CharacterMappingService.lookupCharacterId(): Character not found, night-man');
 
       done();
     });
