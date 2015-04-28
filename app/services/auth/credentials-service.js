@@ -1,14 +1,14 @@
 
 function CredentialsService() {
-  this.keyRepository = require('../../repositories/auth/key-repository');
-  this.cryptoService = require('crypto');
+  this.keyRepository_ = require('../../repositories/auth/key-repository');
+  this.cryptoService_ = require('crypto');
 }
 
 function lookupCredentials() {
-  var keyConfig = getKeyConfig_(this.keyRepository);
+  var keyConfig = getKeyConfig_(this.keyRepository_);
 
   var timesStamp = new Date().getTime().toString();
-  var hash = createHash_(this.cryptoService, timesStamp, keyConfig.privateKey, keyConfig.publicKey);
+  var hash = createHash_(this.cryptoService_, timesStamp, keyConfig.privateKey, keyConfig.publicKey);
 
   return { timeStamp: timesStamp, publicKey: keyConfig.publicKey, hash: hash }
 }

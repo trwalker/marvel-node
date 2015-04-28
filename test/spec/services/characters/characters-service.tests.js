@@ -6,14 +6,14 @@ describe('CharactersService Tests', function() {
   beforeEach(function() {
     charactersService = require('../../../../app/services/characters/characters-service');
 
-    charactersService.characterMappingService = { lookupId: function(name) { return 1009610 } };
-    charactersService.credentialsService = { lookupCredentials: function() {
+    charactersService.characterMappingService_ = { lookupId: function(name) { return 1009610 } };
+    charactersService.credentialsService_ = { lookupCredentials: function() {
                                                                   return { timeStamp: '1427980679859',
                                                                            publicKey: '6ba7749b970cb510f72635ed9fee5119',
                                                                            hash: 'b8fcdc8fd05f1bd62d6c7aa6736afe31' }
                                                                 }
                                             };
-    charactersService.characterRespository = { getCharacterData: function(id, timeStamp, publicKey, hash, callback) {
+    charactersService.characterRespository_ = { getCharacterData: function(id, timeStamp, publicKey, hash, callback) {
                                                                   var data = { data: { results: [{  id: 1009610,
                                                                                                     name: 'spider-man',
                                                                                                     description: 'The guy in the tight red outfit',
@@ -59,7 +59,7 @@ describe('CharactersService Tests', function() {
     });
 
     it('should throw exception when characterMappingService throws exception', function(done) {
-      sinon.stub(charactersService.characterMappingService, 'lookupId', function() { throw new Error('Mapping Error'); });
+      sinon.stub(charactersService.characterMappingService_, 'lookupId', function() { throw new Error('Mapping Error'); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
       expect(lookupCharacter).to.throw(Error, 'Mapping Error');
@@ -68,7 +68,7 @@ describe('CharactersService Tests', function() {
     });
 
     it('should throw exception when credentialService throws exception', function(done) {
-      sinon.stub(charactersService.credentialsService, 'lookupCredentials', function() { throw new Error('Credentials Error'); });
+      sinon.stub(charactersService.credentialsService_, 'lookupCredentials', function() { throw new Error('Credentials Error'); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
       expect(lookupCharacter).to.throw(Error, 'Credentials Error');
@@ -77,7 +77,7 @@ describe('CharactersService Tests', function() {
     });
 
     it('should throw exception when characterRespository throws exception', function(done) {
-      sinon.stub(charactersService.characterRespository, 'getCharacterData', function() { throw new Error('Character Repo Error'); });
+      sinon.stub(charactersService.characterRespository_, 'getCharacterData', function() { throw new Error('Character Repo Error'); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
       expect(lookupCharacter).to.throw(Error, 'Character Repo Error');
@@ -86,7 +86,7 @@ describe('CharactersService Tests', function() {
     });
 
     it('should throw exception when characterRespository returns null', function(done) {
-      sinon.stub(charactersService.characterRespository, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback(null); });
+      sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback(null); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
       expect(lookupCharacter).to.throw(Error, 'Character data not returned from character repository');
@@ -95,7 +95,7 @@ describe('CharactersService Tests', function() {
     });
 
     it('should throw exception when characterRespository returns null data property', function(done) {
-      sinon.stub(charactersService.characterRespository, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: null }); });
+      sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: null }); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
       expect(lookupCharacter).to.throw(Error, 'Character data not returned from character repository');
@@ -104,7 +104,7 @@ describe('CharactersService Tests', function() {
     });
 
     it('should throw exception when characterRespository returns null data results property', function(done) {
-      sinon.stub(charactersService.characterRespository, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: { results: null } }); });
+      sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: { results: null } }); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
       expect(lookupCharacter).to.throw(Error, 'Character data not returned from character repository');
@@ -113,7 +113,7 @@ describe('CharactersService Tests', function() {
     });
 
     it('should throw exception when characterRespository returns empty data results array', function(done) {
-      sinon.stub(charactersService.characterRespository, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: { results: [] } }); });
+      sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: { results: [] } }); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
       expect(lookupCharacter).to.throw(Error, 'Character data not returned from character repository');
@@ -122,7 +122,7 @@ describe('CharactersService Tests', function() {
     });
 
     it('should throw exception when characterRespository returns empty bad data', function(done) {
-      sinon.stub(charactersService.characterRespository, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: { results: [ {} ] } }); });
+      sinon.stub(charactersService.characterRespository_, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({ data: { results: [ {} ] } }); });
 
       var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
       expect(lookupCharacter).to.throw(Error);

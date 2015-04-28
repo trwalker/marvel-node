@@ -1,12 +1,12 @@
 
 function CharactersController() {
-  this.characterService = require('../../../services/characters/characters-service');
+  this.characterService_ = require('../../../services/characters/characters-service');
 }
 
 function get(req, res, next) {
   var characterName = req.params.characterName;
 
-  this.characterService.lookupCharacter(characterName, function (character) {
+  this.characterService_.lookupCharacter(characterName, function (character) {
     characterLookupCallback_(character, res, next);
   });
 }

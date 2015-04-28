@@ -1,15 +1,15 @@
 
 function CharactersService() {
-  this.characterMappingService = require('./character-mapping-service');
-  this.credentialsService = require('../auth/credentials-service');
-  this.characterRespository = require('../../repositories/characters/character-repository');
+  this.characterMappingService_ = require('./character-mapping-service');
+  this.credentialsService_ = require('../auth/credentials-service');
+  this.characterRespository_ = require('../../repositories/characters/character-repository');
 }
 
 function lookupCharacter(name, callback) {
-  var id = this.characterMappingService.lookupId(name);
-  var credentials = this.credentialsService.lookupCredentials();
+  var id = this.characterMappingService_.lookupId(name);
+  var credentials = this.credentialsService_.lookupCredentials();
 
-  this.characterRespository.getCharacterData(id,
+  this.characterRespository_.getCharacterData(id,
                                              credentials.timeStamp,
                                              credentials.publicKey,
                                              credentials.hash,

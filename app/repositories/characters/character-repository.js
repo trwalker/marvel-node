@@ -1,13 +1,13 @@
 const urlFormat = "http://gateway.marvel.com/v1/public/characters/{id}?ts={timeStamp}&apikey={publicKey}&hash={hash}";
 
 function CharacterRepository() {
-  this.httpClient = require('request');
+  this.httpClient_ = { request: require('request') };
 }
 
 function getCharacterData(id, timeStamp, publicKey, hash, callback) {
   var requestOptions = buildRequestOptions_(id, timeStamp, publicKey, hash);
 
-  this.httpClient(requestOptions, function(error, response, body) {
+  this.httpClient_.request(requestOptions, function(error, response, body) {
     responseHandler_(error, response, callback);
   });
 }

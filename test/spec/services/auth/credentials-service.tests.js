@@ -14,8 +14,8 @@ describe('CredentialsService Tests', function() {
     privateKeyMock = 'e19e696baf723c135aed2a729fc4fc45';
     keyConfigMock = { publicKey: publicKeyMock, privateKey: privateKeyMock };
 
-    credentialsService.keyRepository = { getConfig: function() { return keyConfigMock } };
-    credentialsService.cryptoService = { createHash: function(algorithm) {
+    credentialsService.keyRepository_ = { getConfig: function() { return keyConfigMock } };
+    credentialsService.cryptoService_ = { createHash: function(algorithm) {
                                             return {
                                               update: function(data) { },
                                               digest: function(format) { return 'b8fcdc8fd05f1bd62d6c7aa6736afe31' }
@@ -46,7 +46,7 @@ describe('CredentialsService Tests', function() {
     });
 
     it('should throw exception when keyRepository throws exception', function(done) {
-      credentialsService.keyRepository = { getConfig: function() { throw 'unhandled exception' } };
+      credentialsService.keyRepository_ = { getConfig: function() { throw 'unhandled exception' } };
       var lookupCredentials = function() { credentialsService.lookupCredentials(); }
 
       expect(lookupCredentials).to.throw(Error, 'Unable to load .app/config/apikey.config.json, make sure the file exists');
