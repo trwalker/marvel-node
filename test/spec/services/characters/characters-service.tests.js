@@ -85,15 +85,6 @@ describe('CharactersService Tests', function() {
       done();
     });
 
-    it('should throw exception when characterRespository returns exception', function(done) {
-      sinon.stub(charactersService.characterRespository, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback({}, new Error('Character Repo Callback Error')); });
-
-      var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
-      expect(lookupCharacter).to.throw(Error, 'Character Repo Callback Error');
-
-      done();
-    });
-
     it('should throw exception when characterRespository returns null', function(done) {
       sinon.stub(charactersService.characterRespository, 'getCharacterData', function(id, timeStamp, publicKey, hash, callback) { callback(null); });
 

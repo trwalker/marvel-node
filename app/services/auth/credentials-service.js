@@ -40,7 +40,7 @@ function getKeyConfig_(keyRepository) {
 
 function createHash_(cryptoService, timeStamp, privateKey, publicKey) {
   var md5Hash = cryptoService.createHash('md5');
-  md5Hash.update(timeStamp + privateKey, publicKey);
+  md5Hash.update(timeStamp + privateKey + publicKey);
 
   return md5Hash.digest('hex');
 }

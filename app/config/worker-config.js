@@ -8,6 +8,7 @@ var settingsConfig = require('./settings/settings-config');
 function configureWorker(application) {
   configureApplication(application);
   configureRoutes(application);
+  configureErrorHandler(application);
 
   startServer(application);
 }
@@ -26,6 +27,26 @@ function configureApplication(application) {
 
 function configureRoutes(application) {
   routeConfig.registerRoutes(application);
+}
+
+function configureErrorHandler(application) {
+  application.use(function(err, req, res, next) {
+    if(err) {
+      switch(err.name) {
+        case 'NotFoundError':
+          res.status(404).json({ message: err.message, statusCode: err.statusCode });
+          res.end();
+          break;
+        default:
+          // TODO: Log error here
+          res.status(500).json({ message: err.message, statusCode: err.statusCode });
+          res.end();
+          break;
+      }
+    }
+
+    next();
+  });
 }
 
 function startServer(application) {

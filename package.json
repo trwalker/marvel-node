@@ -29,6 +29,6 @@
     "body-parser": "^1.12.2",
     "cluster-service": "^1.0.5",
     "express": "^4.12.3",
-    "request": "^2.54.0"
+    "request": "^2.55.0"
   }
 }

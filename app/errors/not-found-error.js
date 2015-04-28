@@ -1,8 +1,8 @@
 
 function NotFoundError(message) {
   this.name = 'NotFoundError';
-  this.message = message || 'Default Message';
-  this.status = 404;
+  this.message = message || 'Data not found';
+  this.statusCode = 404;
 }
 
 NotFoundError.prototype = Object.create(Error.prototype);

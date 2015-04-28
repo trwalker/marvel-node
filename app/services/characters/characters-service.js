@@ -13,14 +13,10 @@ function lookupCharacter(name, callback) {
                                              credentials.timeStamp,
                                              credentials.publicKey,
                                              credentials.hash,
-                                             function(data, error) { lookupCallback_(data, error, callback); });
+                                             function(data) { getCharacterCallback_(data, callback); });
 }
 
-function lookupCallback_(data, error, callback) {
-  if(error) {
-    throw error;
-  }
-
+function getCharacterCallback_(data, callback) {
   var characterModel = getCharacterModelFromData_(data);
 
   callback(characterModel);
