@@ -50,18 +50,23 @@ function buildRequestUrl_(id, timeStamp, publicKey, hash) {
 }
 
 function responseHandler_(error, response, callback) {
-  switch(response.statusCode) {
-    case 200:
-      callback(response.body);
-      break;
-    case 404:
-      var NotFoundError = require('../../errors/not-found-error');
-      throw new NotFoundError('CharacterRepository.responseHandler_(): Character data not found');
-    case 401:
-      var NotAuthorizedError = require('../../errors/not-authorized-error');
-      throw new NotAuthorizedError('CharacterRepository.responseHandler_(): Not authorized response');
-    default:
-      throw new Error('CharacterRepository.responseHandler_(): Unhandled exception getting character data. Status -  ' + response.statusCode + '. Error - ' + error);
+  if(error) {
+    throw new Error('CharacterRepository.responseHandler_(): Unhandled exception getting character data. Error - ' + error);
+  }
+  else {
+    switch (response.statusCode) {
+      case 200:
+        callback(response.body);
+        break;
+      case 404:
+        var NotFoundError = require('../../errors/not-found-error');
+        throw new NotFoundError('CharacterRepository.responseHandler_(): Character data not found');
+      case 401:
+        var NotAuthorizedError = require('../../errors/not-authorized-error');
+        throw new NotAuthorizedError('CharacterRepository.responseHandler_(): Not authorized response');
+      default:
+        throw new Error('CharacterRepository.responseHandler_(): Unhandled exception getting character data. Status -  ' + response.statusCode + '. Error - ' + error);
+    }
   }
 }
 

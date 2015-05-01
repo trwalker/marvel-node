@@ -128,11 +128,20 @@ describe('CharacterRepository Tests', function() {
     });
 
     it('should throw unhandled exception when 500 status code', function(done) {
+      response = { statusCode: 500, body: { data: {} } };
+      var getCharacterData = function() { characterRepository.getCharacterData(1234, timeStamp, publicKey, hash, function(body) {}); };
+
+      expect(getCharacterData).to.throw(Error, 'CharacterRepository.responseHandler_(): Unhandled exception getting character data. Status -  500. Error - null');
+
+      done();
+    });
+
+    it('should throw unhandled exception when error is not null', function(done) {
       error = 'Server Error';
       response = { statusCode: 500, body: { data: {} } };
       var getCharacterData = function() { characterRepository.getCharacterData(1234, timeStamp, publicKey, hash, function(body) {}); };
 
-      expect(getCharacterData).to.throw(Error, 'CharacterRepository.responseHandler_(): Unhandled exception getting character data. Status -  500. Error - Server Error');
+      expect(getCharacterData).to.throw(Error, 'CharacterRepository.responseHandler_(): Unhandled exception getting character data. Error - Server Error');
 
       done();
     });
