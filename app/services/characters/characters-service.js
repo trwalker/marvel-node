@@ -2,22 +2,32 @@
 function CharactersService() {
   this.characterMappingService_ = require('./character-mapping-service');
   this.credentialsService_ = require('../auth/credentials-service');
+  this.characterCacheService_ = require('./character-cache-service');
   this.characterRespository_ = require('../../repositories/characters/character-repository');
 }
 
 function lookupCharacter(name, callback) {
-  var id = this.characterMappingService_.lookupId(name);
-  var credentials = this.credentialsService_.lookupCredentials();
+  var cachedCharacter = this.characterCacheService_.lookupCharacter(name);
 
-  this.characterRespository_.getCharacterData(id,
-                                             credentials.timeStamp,
-                                             credentials.publicKey,
-                                             credentials.hash,
-                                             function(data) { getCharacterCallback_(data, callback); });
+  if(cachedCharacter) {
+    callback(cachedCharacter);
+  }
+  else {
+    var id = this.characterMappingService_.lookupId(name);
+    var credentials = this.credentialsService_.lookupCredentials();
+    var characterCacheService = this.characterCacheService_;
+
+    this.characterRespository_.getCharacterData(id,
+      credentials.timeStamp,
+      credentials.publicKey,
+      credentials.hash,
+      function(data) { getCharacterCallback_(data, callback, characterCacheService); });
+  }
 }
 
-function getCharacterCallback_(data, callback) {
+function getCharacterCallback_(data, callback, characterCacheService) {
   var characterModel = getCharacterModelFromData_(data);
+  characterCacheService.cacheCharacter(characterModel.name, characterModel);
 
   callback(characterModel);
 }
@@ -33,7 +43,7 @@ function getCharacterModelFromData_(data) {
            name: characterData.name,
            description: characterData.description,
            image: characterData.thumbnail.path + '.' + characterData.thumbnail.extension,
-           comics: characterData.comics.items }
+           comics: characterData.comics.items };
 }
 
 CharactersService.prototype = {

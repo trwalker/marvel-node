@@ -2,17 +2,24 @@
 describe('CharactersService Tests', function() {
 
   var charactersService;
+  var cacheContainer;
 
   beforeEach(function() {
     charactersService = require('../../../../app/services/characters/characters-service');
 
     charactersService.characterMappingService_ = { lookupId: function(name) { return 1009610 } };
+
     charactersService.credentialsService_ = { lookupCredentials: function() {
                                                                   return { timeStamp: '1427980679859',
                                                                            publicKey: '6ba7749b970cb510f72635ed9fee5119',
                                                                            hash: 'b8fcdc8fd05f1bd62d6c7aa6736afe31' }
                                                                 }
                                             };
+
+    cacheContainer = {};
+    charactersService.characterCacheService_ = { lookupCharacter: function(name) { return cacheContainer[name]; },
+                                    cacheCharacter: function(name, character) { cacheContainer[name] = character; } };
+
     charactersService.characterRespository_ = { getCharacterData: function(id, timeStamp, publicKey, hash, callback) {
                                                                   var data = { data: { results: [{  id: 1009610,
                                                                                                     name: 'spider-man',
@@ -46,7 +53,6 @@ describe('CharactersService Tests', function() {
     });
 
     it('should return all model properties when valid character', function(done) {
-
       charactersService.lookupCharacter('spider-man', function(characterModel) {
         expect(characterModel.id).to.equal(1009610);
         expect(characterModel.name).to.equal('spider-man');
@@ -56,6 +62,43 @@ describe('CharactersService Tests', function() {
 
         done();
       });
+    });
+
+    it('should cache character after looking up character', function(done) {
+      charactersService.lookupCharacter('spider-man', function(characterModel) {
+        var cachedCharacter = cacheContainer['spider-man'];
+        expect(characterModel.id).to.equal(cachedCharacter.id);
+
+        done();
+      });
+    });
+
+    it('should return cached character when character is cached', function(done) {
+      cacheContainer['spider-man'] = { name: 'spider-man', id: 1234 };
+
+      charactersService.lookupCharacter('spider-man', function(characterModel) {
+        expect(characterModel.id).to.equal(1234);
+
+        done();
+      });
+    });
+
+    it('should throw exception when characterCacheService lookupCharacter throws exception', function(done) {
+      sinon.stub(charactersService.characterCacheService_, 'lookupCharacter', function() { throw new Error('Lookup Error'); });
+
+      var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
+      expect(lookupCharacter).to.throw(Error, 'Lookup Error');
+
+      done();
+    });
+
+    it('should throw exception when characterCacheService cacheCharacter throws exception', function(done) {
+      sinon.stub(charactersService.characterCacheService_, 'cacheCharacter', function() { throw new Error('Cache Error'); });
+
+      var lookupCharacter = function() { charactersService.lookupCharacter('spider-man', function(data) {}); };
+      expect(lookupCharacter).to.throw(Error, 'Cache Error');
+
+      done();
     });
 
     it('should throw exception when characterMappingService throws exception', function(done) {
