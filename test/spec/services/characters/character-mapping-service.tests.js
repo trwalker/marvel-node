@@ -2,11 +2,19 @@
 describe('CharacterMappingService Tests', function() {
 
   var characterMappingService;
-  var validCharacters = ['spider-man', 'hulk', 'captain-america', 'iron-man', 'thor', 'wolverine', 'storm', 'jean-grey', 'gambit', 'cyclops', 'beast'];
   var NotFoundError;
 
   beforeEach(function() {
     characterMappingService = require('../../../../app/services/characters/character-mapping-service');
+
+    characterMappingService.characterMapRespository_ = { getCharacterMap: function() {
+        var characterMap = new Map();
+        characterMap.set('spider-man', 1009610);
+
+        return characterMap;
+      }
+    };
+
     NotFoundError = require('../../../../app/errors/not-found-error');
   });
 
@@ -28,15 +36,6 @@ describe('CharacterMappingService Tests', function() {
     it('should return valid character id given mixed case character name', function(done) {
       var characterId = characterMappingService.lookupId('SPIDER-man');
       expect(characterId).to.equal(1009610);
-
-      done();
-    });
-
-    it('should return valid character id given all valid characters', function(done) {
-      for (var i = 0, length = validCharacters.length; i < length; i++) {
-        var characterId = characterMappingService.lookupId(validCharacters[i]);
-        expect(characterId).to.be.above(0);
-      }
 
       done();
     });
