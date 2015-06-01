@@ -1,5 +1,6 @@
 
 function CharactersListController() {
+
 }
 
 function get(req, res, next) {
