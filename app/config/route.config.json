@@ -1,6 +1,11 @@
 {
   "routes": [
     {
+      "route": "/v1/characters",
+      "method": "GET",
+      "controller": "../controllers/v1/characters/characters-list-controller"
+    },
+    {
       "route": "/v1/characters/:characterName",
       "method": "GET",
       "controller": "../controllers/v1/characters/characters-controller"
