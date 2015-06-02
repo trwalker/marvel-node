@@ -1,10 +1,12 @@
 
 function CharactersListController() {
-
+  this.characterListService_ = require('../../../services/characters/character-list-service');
 }
 
 function get(req, res, next) {
-  res.status(200).json({ hello: 'world' });
+  var characterList = this.characterListService_.lookupCharacterList();
+
+  res.status(200).json(characterList);
 }
 
 CharactersListController.prototype = {

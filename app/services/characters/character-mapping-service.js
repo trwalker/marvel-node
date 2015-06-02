@@ -1,7 +1,7 @@
 
 
 function CharacterMappingService() {
-  this.characterMapRespository_ = require('../../repositories/characters/character-map-repository');
+  this.characterMapRepository_ = require('../../repositories/characters/character-map-repository');
 }
 
 function lookupId(characterName) {
@@ -9,7 +9,7 @@ function lookupId(characterName) {
     throw new TypeError('CharacterMappingService.lookupCharacterId(): Null or empty character name');
   }
 
-  var characterMap = this.characterMapRespository_.getCharacterMap();
+  var characterMap = this.characterMapRepository_.getCharacterMap();
 
   var characterId = characterMap.get(characterName.toLowerCase());
   if(!characterId) {

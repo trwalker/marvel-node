@@ -39,7 +39,7 @@ describe('CharacterListService Tests', function() {
     });
 
     it('should rethrow exception from character map respository', function(done){
-      characterListService.characterMapRepository_ = { getCharacterMap: function() { throw new Error('Unhandled Error'); }};
+      characterListService.characterMapRepository_.getCharacterMap = function() { throw new Error('Unhandled Error'); };
 
       var lookupCharacterList = function() { characterListService.lookupCharacterList(); };
 
@@ -47,5 +47,6 @@ describe('CharacterListService Tests', function() {
 
       done();
     });
+
   });
 });

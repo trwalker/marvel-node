@@ -7,7 +7,7 @@ describe('CharacterMappingService Tests', function() {
   beforeEach(function() {
     characterMappingService = require('../../../../app/services/characters/character-mapping-service');
 
-    characterMappingService.characterMapRespository_ = { getCharacterMap: function() {
+    characterMappingService.characterMapRepository_ = { getCharacterMap: function() {
         var characterMap = new Map();
         characterMap.set('spider-man', 1009610);
 
@@ -60,5 +60,16 @@ describe('CharacterMappingService Tests', function() {
 
       done();
     });
+
+    it('should rethrow exception from character map respository', function(done){
+      characterMappingService.characterMapRepository_.getCharacterMap = function() { throw new Error('Unhandled Error'); };
+
+      var lookUpId = function() { characterMappingService.lookupId('spider-man'); };
+
+      expect(lookUpId).to.throw(Error, 'Unhandled Error');
+
+      done();
+    });
+
   });
 });
