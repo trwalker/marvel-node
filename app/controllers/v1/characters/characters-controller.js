@@ -1,6 +1,6 @@
 
 function CharactersController() {
-  this.characterService_ = require('../../../services/characters/characters-service');
+  this.characterService_ = require('../../../services/characters/character-service');
 }
 
 function get(req, res, next) {

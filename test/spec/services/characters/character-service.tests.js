@@ -5,7 +5,7 @@ describe('CharactersService Tests', function() {
   var cacheContainer;
 
   beforeEach(function() {
-    charactersService = require('../../../../app/services/characters/characters-service');
+    charactersService = require('../../../../app/services/characters/character-service');
 
     charactersService.characterMappingService_ = { lookupId: function(name) { return 1009610 } };
 
