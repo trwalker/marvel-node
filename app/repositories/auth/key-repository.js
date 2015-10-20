@@ -1,16 +1,15 @@
-
 /* istanbul ignore next */
 function KeyRepository() {
 }
 
 /* istanbul ignore next */
 function getConfig() {
-  return require('../../config/apikey.config.json');
+    return require('../../config/apikey.config.json');
 }
 
 /* istanbul ignore next */
 KeyRepository.prototype = {
-  getConfig: getConfig
+    getConfig: getConfig
 }
 
 /* istanbul ignore next */

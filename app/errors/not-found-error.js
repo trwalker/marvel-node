@@ -1,8 +1,7 @@
-
 function NotFoundError(message) {
-  this.name = 'NotFoundError';
-  this.message = message || 'Data not found';
-  this.statusCode = 404;
+    this.name = 'NotFoundError';
+    this.message = message || 'Data not found';
+    this.statusCode = 404;
 }
 
 NotFoundError.prototype = Object.create(Error.prototype);
