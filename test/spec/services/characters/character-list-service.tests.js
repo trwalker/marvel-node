@@ -8,7 +8,12 @@ describe('CharacterListService Tests', function () {
         characterListService.characterMapRepository_ = {
             getCharacterMap: function () {
                 var characterMap = new Map();
-                characterMap.set('spider-man', 1009610);
+                characterMap.set('spider-man', {
+                    id: 1009610,
+                    name: 'spider-man',
+                    resourceUri: 'http://my.api.com/v1/characters/spider-man',
+                    imageUri: 'http://i.annihil.us/u/prod/marvel/i/mg/3/50/526548a343e4b.jpg'
+                });
 
                 return characterMap;
             }
@@ -33,7 +38,7 @@ describe('CharacterListService Tests', function () {
             var characterList = characterListService.lookupCharacterList();
 
             expect(characterList.characters.length).to.equal(1);
-            expect(characterList.characters[0]).to.equal('spider-man');
+            expect(characterList.characters[0].name).to.equal('spider-man');
 
             done();
         });

@@ -7,7 +7,7 @@ function lookupCharacterList() {
 
     var characterList = {characters: []};
 
-    for (var key of characterMap.keys()) {
+    for (var key of characterMap.values()) {
         characterList.characters.push(key);
     }
 

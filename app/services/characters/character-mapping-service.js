@@ -9,13 +9,13 @@ function lookupId(characterName) {
 
     var characterMap = this.characterMapRepository_.getCharacterMap();
 
-    var characterId = characterMap.get(characterName.toLowerCase());
-    if (!characterId) {
+    var character = characterMap.get(characterName.toLowerCase());
+    if (!character) {
         var NotFoundError = require('../../errors/not-found-error');
         throw new NotFoundError('CharacterMappingService.lookupCharacterId(): Character not found, ' + characterName);
     }
 
-    return characterId;
+    return character.id;
 }
 
 CharacterMappingService.prototype = {

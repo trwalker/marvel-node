@@ -1,5 +1,6 @@
 {
   "settings": [
-    { "name": "queueLength", "value": 511 }
+    { "name": "queueLength", "value": 511 },
+    { "name": "baseUri", "value": "http://127.0.0.1:9000/" }
   ]
 }
