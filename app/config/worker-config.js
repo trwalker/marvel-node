@@ -54,8 +54,8 @@ function configureErrorHandler(application) {
 function startServer(application) {
     var server = http.createServer(application);
 
-    server.listen(settingsConfig.settings.workerPort, settingsConfig.settings.hostName, settingsConfig.settings.queueLength, function () {
-        console.log('listening at http://%s:%s', settingsConfig.settings.hostName, settingsConfig.settings.workerPort);
+    server.listen(settingsConfig.settings.workerPort, null, settingsConfig.settings.queueLength, function () {
+        console.log('listening at http://%s:%s', server.address().address, server.address().port);
     });
 }
 

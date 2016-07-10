@@ -1,6 +1,6 @@
 {
-  "settings": [
-    { "name": "queueLength", "value": 511 },
-    { "name": "baseUri", "value": "http://127.0.0.1:9000/" }
-  ]
+  "clusterEnabled": true,
+  "masterPort": 9000,
+  "workerPort": 3000,
+  "queueLength": 1000
 }

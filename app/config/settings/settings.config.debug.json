@@ -1,5 +1,5 @@
 {
-    "clusterEnabled": true,
+    "clusterEnabled": false,
     "masterPort": 9000,
     "workerPort": 3000,
     "queueLength": 10
